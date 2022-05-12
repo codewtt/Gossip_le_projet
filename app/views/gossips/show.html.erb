@@ -1,0 +1,59 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @gossip.title %>
+</p>
+
+<p>
+  <strong>Content:</strong>
+  <%= @gossip.content %>
+</p>
+
+<strong>Le gossiper</strong>
+  <% gossiper = User.find(@gossip.user_id)  %>
+  <%= link_to gossiper.first_name, user_path(gossiper.id) %>
+
+  <br><br>
+
+<%= link_to 'Edit', edit_gossip_path(@gossip) %> |
+<%= link_to 'Back', gossips_path %>
+
+<p><%= @gossip.likes.count %> <%= (@gossip.likes.count) == 1 ? 'Like' : 'Likes'%></p>
+<% pre_like = @gossip.likes.find { |like| like.user_id == current_user.id} %>
+<% if pre_like %>
+  <%= button_to 'Unlike', gossip_like_path(@gossip.id, pre_like), method: :delete %>
+<% else %>
+  <%= button_to 'Like', gossip_likes_path(@gossip.id), method: :post %>
+<% end %>
+
+<p>
+<br><br>
+  <strong>Commentaires</strong>
+  <br>
+  <p>Ecrire un nouveau commentaire</p>
+  <%= form_tag gossip_comments_path(@gossip), :method => :post do%>
+    <div class="field">
+      <%= label_tag :content%>
+      <%= text_area_tag :content %>
+    </div>
+    
+    <div class="actions">
+      <%= submit_tag "Create Comment" %>
+    </div>
+  
+  <% end %>
+  
+  <br>
+  <% comments = Comment.where(gossip_id: params[:id]) %>
+  <br>
+    <% comments.each do |comment| %>
+      <% user_comment = comment.user %>
+      <%= user_comment.first_name %>
+      <br>
+      <%= comment.content %>
+      <br><br>
+      <% end %>
+
+         
+</p>

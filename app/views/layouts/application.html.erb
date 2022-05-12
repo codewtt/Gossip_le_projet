@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+  <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <title>TheGossipProject</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+        <a class="navbar-brand text-light" href="/">The Gossip Project</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav">
+            <li class="nav-item active">
+            
+              <a class="nav-link text-light" <%= link_to "Accueil", root_path %>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-secondary" <%= link_to "La team", team_path %>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-secondary"<%= link_to "Contact", contact_path %>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-secondary"<%= link_to "Devenir gossiper", new_user_path %>
+            </li>
+            <li class="nav-item">
+              <% if current_user %>
+                <a class="nav-link text-secondary"<%= link_to     current_user.first_name, users_path(current_user) %>
+              <% else %>
+                <a class="nav-link text-secondary"<%= link_to     "Connexion", new_session_path %>
+                
+                <% end %>
+                
+
+            </li>
+            
+          </ul>
+        </div>
+        </nav>
+      </header>
+    <%= yield %>
+  </body>
+</html>

@@ -1,0 +1,55 @@
+<h1>Vous trouverez dans cette page les provenant de chacune des villes où sont nos gossipers</h1>
+<br>
+<table>
+  <thead>
+      <tr>
+        <th>Ville</th>
+        <th>Gossiper</th>
+        <th colspan="3"></th>
+        <hr>
+      </tr>
+    </thead>
+  <tbody>
+      <% @city.each do |city| %>
+        <tr>
+        <td><%= city.name %></td> 
+          <% @user_city = User.where(city_id: city.id) %>
+          <% @user_city.each do |user| %>
+          <td><%= user.first_name %></td>
+          
+          <% end %>  
+            
+          </tr>
+      <% end %>
+    </tbody>
+</table>
+
+<br>
+
+<table>
+  <thead>
+      <tr>
+        <th>Ville</th>
+        <th>Gossips</th>
+        <th colspan="3"></th>
+        <hr>
+      </tr>
+    </thead>
+  <tbody>
+      <% @city.each do |city| %>
+        <tr>
+        <td><%= city.name %></td> 
+          <% @user_city = User.where(city_id: city.id) %>
+          
+          <% @user_city.each do |user| %>
+          <% gossips_city = Gossip.where(user_id: user.id) %>
+            <% gossips_city.each do |gossip_city| %>
+              <td><%= gossip_city.content %></td>
+              
+              <% end %>
+              
+          <% end %>    
+          </tr>
+      <% end %>
+    </tbody>
+</table>
